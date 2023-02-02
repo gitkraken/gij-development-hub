@@ -1,0 +1,13 @@
+*.iml
+*.idea
+.DS_Store
+node_modules
+*.pem
+credentials.json
+.cache
+views/*.js
+views/*.js.map
+views/node
+public/app.*
+public/index.html
+dist

@@ -1,0 +1,38 @@
+{
+    "key": "com.gitkraken.development-hub",
+    "name": "Development Hub",
+    "description": "",
+    "baseUrl": "{{localBaseUrl}}",
+    "authentication": {
+        "type": "jwt"
+    },
+    "lifecycle": {
+        "installed": "/installed",
+        "uninstalled": "/uninstalled"
+    },
+    "scopes": [
+        "READ"
+    ],
+    "apiMigrations":{
+        "signed-install": true
+    },
+    "vendor": {
+        "name": "GitKraken",
+        "url": "https://www.gitkraken.com"
+    },
+    "modules": {
+        "generalPages": [
+            {
+                "key": "dev-hub",
+                "location": "system.top.navigation.bar",
+                "name": {
+                    "value": "Development Hub"
+                },
+                "url": "index.html",
+                "conditions": [{
+                    "condition": "user_is_logged_in"
+                }]
+            }
+        ]
+    }
+}

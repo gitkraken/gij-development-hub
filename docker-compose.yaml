@@ -1,0 +1,49 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=<user>
+      - POSTGRES_PASSWORD=<password>
+      - POSTGRES_DB=db
+
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./ui/public:/usr/share/nginx/html
+      - ./opt/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 3001:80
+
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    command: npm run start
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - db
+
+  client:
+    command: npm run start
+    build:
+      dockerfile: Dockerfile
+      context: ./ui
+    ports:
+      - 5000:5000
+    volumes:
+      - ./ui:/usr/app
+      - /usr/app/node_modules
+
+volumes:
+  dbdata:
